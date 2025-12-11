@@ -19,7 +19,9 @@ app.get("/", (req, res) => {
 // Book create system
 app.post("/book", upload.single("image"), async (req, res) => {
   // console.log(req.body);
-  // console.log(req.body.bookName); // book ko name matra request garna man lagyo
+  // console.log(req.body.bookName); // book ko name matra request
+  // garna man lagyo
+  console.log(req.file);
   const {
     bookName,
     bookPrice,
@@ -28,6 +30,13 @@ app.post("/book", upload.single("image"), async (req, res) => {
     publishedAt,
     publication,
   } = req.body;
+  let filename;
+  if (!req.file) {
+    filename =
+      "https://img.freepik.com/free-photo/couple-making-heart-from-hands-sea-shore_23-2148019887.jpg?semt=ais_hybrid&w=740&q=80";
+  } else {
+    filename = req.file.filename;
+  }
   console.log("Book Name:", bookName);
   await Book.create({
     bookName: bookName,
@@ -36,6 +45,7 @@ app.post("/book", upload.single("image"), async (req, res) => {
     authorName: authorName,
     publishedAt: publishedAt,
     publication: publication,
+    imageUrl: filename,
   });
   res.status(201).json({ message: "Book created Successfully" });
 });
@@ -93,6 +103,7 @@ app.patch("/book/:id", async (req, res) => {
   });
   res.status(200).json({ message: "Book Updated Succesfully!!" });
 });
+app.use(express.static("./storage/"));
 
 app.listen(PORT, () =>
   console.log(`Server running at http://localhost:${PORT}`)

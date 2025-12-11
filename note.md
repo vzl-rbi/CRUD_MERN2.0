@@ -57,3 +57,11 @@ Nosql: new column name add garesi migrate garna pardaina afai update hunx
 4. # multer install gareko to handle file like images, video,docuemnt etc
 
 # file uploaded from postman i.e form-data
+
+# multer code is updated to support only iamge not video, pdf etc file
+
+# node.js le file haru access sajilai didaina so access dina parxa ani matra file herna painxa
+
+app.use(express.static("./storage/"))
+
+app.use(express.static("./")) // never do this //it will show all your privacy or code.
