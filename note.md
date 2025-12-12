@@ -65,3 +65,7 @@ Nosql: new column name add garesi migrate garna pardaina afai update hunx
 app.use(express.static("./storage/"))
 
 app.use(express.static("./")) // never do this //it will show all your privacy or code.
+
+## http://localhost:8000/1765520298380-bulbOn.png
+
+filename = "http://localhost:8000/" + req.file.filename; //localhost rakhda front end lai image name matra iuse garda bhayo

@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import fs from "fs";
 import { connectToDb } from "./database/index.js";
 import { Book } from "./model/bookModel.js";
 //multerConfig imports
@@ -35,7 +36,7 @@ app.post("/book", upload.single("image"), async (req, res) => {
     filename =
       "https://img.freepik.com/free-photo/couple-making-heart-from-hands-sea-shore_23-2148019887.jpg?semt=ais_hybrid&w=740&q=80";
   } else {
-    filename = req.file.filename;
+    filename = "http://localhost:8000/" + req.file.filename; //localhost rakhda front end lai image name matra iuse garda bhayo
   }
   console.log("Book Name:", bookName);
   await Book.create({
@@ -80,7 +81,7 @@ app.delete("/book/:id", async (req, res) => {
 });
 
 //Update book operation
-app.patch("/book/:id", async (req, res) => {
+app.patch("/book/:id", upload.single("image"), async (req, res) => {
   const id = req.params.id;
   const {
     bookName,
@@ -92,6 +93,25 @@ app.patch("/book/:id", async (req, res) => {
   } = req.body;
   // yasari garda ni bhayo but ramro tarika hoina
   // Book.findByIdAndUpdate(id, req.body);
+  const oldDatas = await Book.findById(id);
+  let filename;
+  if (req.file) {
+    // console.log(req.file);
+    // console.log(oldDatas);
+    const oldImagePath = oldDatas.imageUrl;
+    console.log("oldImagePath:", oldImagePath);
+    const localHostUrlLength = "http://localhost:8000/".length;
+    const newImagepath = oldImagePath.slice(localHostUrlLength);
+    console.log("newImagePath:", newImagepath);
+    fs.unlink(`storage/${newImagepath}`, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("File Deleted Successfully!!");
+      }
+    });
+    filename = "http://localhost/8000/" + req.file.filename;
+  }
 
   await Book.findByIdAndUpdate(id, {
     bookName: bookName,
@@ -100,6 +120,7 @@ app.patch("/book/:id", async (req, res) => {
     authorName: authorName,
     publishedAt: publishedAt,
     publication: publication,
+    imageUrl: filename,
   });
   res.status(200).json({ message: "Book Updated Succesfully!!" });
 });
