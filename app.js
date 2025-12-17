@@ -1,14 +1,22 @@
 import express from "express";
-import mongoose from "mongoose";
 import fs from "fs";
 import { connectToDb } from "./database/index.js";
 import { Book } from "./model/bookModel.js";
 //multerConfig imports
 import multer from "multer";
 import { storage } from "./middleware/multerConfig.js";
-const upload = multer({ storage: storage });
+import cors from "cors";
 const app = express();
 const PORT = 8000;
+// Enable CORS for all routes
+app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", //// Allow only my React app oR "*
+    method: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
+const upload = multer({ storage: storage });
 
 app.use(express.json()); //postman ma haleko json data yo code halse matra node.js le buhne garxa and undefined audaina
 

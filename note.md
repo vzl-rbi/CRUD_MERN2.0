@@ -69,3 +69,26 @@ app.use(express.static("./")) // never do this //it will show all your privacy o
 ## http://localhost:8000/1765520298380-bulbOn.png
 
 filename = "http://localhost:8000/" + req.file.filename; //localhost rakhda front end lai image name matra iuse garda bhayo
+
+## rest, resful api give you momo, achar, pepsi everything instead of Momo only. To prevent this issue GraphQl is introduced so that only necessary thing is provide to you not everything
+
+# We are comparing REST/RESTful APIs and GraphQL in terms of data fetching. The statement is about the problem of over-fetching and under-fetching
+
+**REST/RESTful API (The Combo Meal Problem):**
+
+- You ask for "Momo" (a specific resource)
+- Server gives you: **Momo + Achar + Pepsi + Maybe even a dessert** (all fixed fields)
+- You **can't** say "Just Momo, no extras"
+
+**GraphQL (The Custom Order):**
+
+- You ask for "Momo only"
+- Server gives you: **Just Momo**
+- Or you could say: "Momo + Pepsi, but no Achar"
+
+## cors is installed `npm i cors`
+
+#CORS (Cross-Origin Resource Sharing) is like a security bouncer for websites.
+
+Simple analogy:
+Imagine you're at a private party (your website). The bouncer (CORS) checks your ID to see if you're on the guest list. If you're not on the list, you can't come in. Similarly, when your website tries to talk to a different website's API, CORS checks if that other website has given your website permission to access its data.
