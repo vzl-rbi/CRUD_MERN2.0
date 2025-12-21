@@ -12,7 +12,7 @@ const PORT = 8000;
 app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:5173", //// Allow only my React app oR "*
+    origin: "*", //// Allow only my React app oR http://localhost:5173 " or "*""
     method: ["GET", "POST", "PATCH", "DELETE"],
   })
 );

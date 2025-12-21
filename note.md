@@ -92,3 +92,37 @@ filename = "http://localhost:8000/" + req.file.filename; //localhost rakhda fron
 
 Simple analogy:
 Imagine you're at a private party (your website). The bouncer (CORS) checks your ID to see if you're on the guest list. If you're not on the list, you can't come in. Similarly, when your website tries to talk to a different website's API, CORS checks if that other website has given your website permission to access its data.
+
+## import cors from "cors";
+
+app.use(
+cors({
+origin: "\*",
+methods: ["GET", "POST", "PATCH", "DELETE"],
+})
+);
+
+- use garn paro so vercel sang backend connect hos bhanera natra http://localhost:5173 yo react ko local host sang matra conect bhai rako thiyo vercel ma connect bhayena
+
+## safe and secure process
+
+OPTION 2: PRODUCTION-READY (recommended)
+import cors from "cors";
+
+const allowedOrigins = [
+"http://localhost:5173",
+"https://your-vercel-app.vercel.app",
+];
+
+app.use(
+cors({
+origin: (origin, callback) => {
+if (!origin || allowedOrigins.includes(origin)) {
+callback(null, true);
+} else {
+callback(new Error("Not allowed by CORS"));
+}
+},
+methods: ["GET", "POST", "PATCH", "DELETE"],
+})
+);
